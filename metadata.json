@@ -1,0 +1,5 @@
+{
+  "name": "FYP Presentation Web Page",
+  "description": "A mobile-first, single-page web app to visually explain a light intensity modulated water leakage detection system using tapered polymer optical fiber. Designed for a QR code on an engineering poster.",
+  "requestFramePermissions": []
+}
