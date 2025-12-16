@@ -119,13 +119,44 @@ const App: React.FC = () => {
                 <div className="w-full max-w-md mt-6">
                     <p className="text-center font-semibold mb-2">Received Intensity</p>
                     <div className="bg-[#0D1B2A] p-4 rounded-lg">
-                        <svg viewBox="0 0 100 50" className="w-full h-auto">
-                            <line x1="5" y1="45" x2="95" y2="45" stroke="#415A77" strokeWidth="1" />
-                            <line x1="5" y1="5" x2="5" y2="45" stroke="#415A77" strokeWidth="1" />
-                             {/* Dry line */}
-                            <path d="M 10 10 C 30 10, 70 15, 90 12" stroke="#4ade80" fill="none" strokeWidth="2"  className={`transition-opacity duration-500 ${!isWet ? 'opacity-100' : 'opacity-30'}`} />
-                            {/* Wet line */}
-                            <path d="M 10 30 C 30 32, 70 35, 90 33" stroke="#f87171" fill="none" strokeWidth="2" className={`transition-opacity duration-500 ${isWet ? 'opacity-100' : 'opacity-30'}`} />
+                        <svg viewBox="0 0 100 60" className="w-full h-auto" aria-labelledby="graphTitle" role="img">
+                            <title id="graphTitle">Animated graph showing light intensity drop when the sensor is wet.</title>
+                            {/* Axes */}
+                            <line x1="5" y1="55" x2="95" y2="55" stroke="#415A77" strokeWidth="1" />
+                            <line x1="5" y1="5" x2="5" y2="55" stroke="#415A77" strokeWidth="1" />
+                            <text x="50" y="10" textAnchor="middle" fill="#A9B4C2" fontSize="5">Intensity</text>
+
+                            {/* Dry reference line (visible only when wet) */}
+                            <path
+                                d="M 10 20 C 30 20, 70 25, 90 22"
+                                stroke="#4ade80"
+                                fill="none"
+                                strokeWidth="1.5"
+                                strokeDasharray="3 2"
+                                className={`transition-opacity duration-300 ${isWet ? 'opacity-50' : 'opacity-0'}`}
+                            />
+
+                            {/* Main signal line (animates) */}
+                            <path
+                                d="M 10 20 C 30 20, 70 25, 90 22"
+                                stroke={isWet ? "#f87171" : "#4ade80"}
+                                fill="none"
+                                strokeWidth="2"
+                                className="transition-all duration-500 ease-in-out"
+                                style={{ transform: isWet ? 'translateY(20px)' : 'translateY(0px)' }}
+                            />
+
+                            {/* Intensity Drop Arrow and Label (visible only when wet) */}
+                            <g className={`transition-opacity duration-300 delay-200 ${isWet ? 'opacity-100' : 'opacity-0'}`} aria-hidden={!isWet}>
+                                {/* Arrow line */}
+                                <line x1="55" y1="23" x2="55" y2="40" stroke="white" strokeWidth="0.8" />
+                                {/* Arrow heads */}
+                                <polyline points="53,25 55,23 57,25" fill="none" stroke="white" strokeWidth="0.8" />
+                                <polyline points="53,38 55,40 57,38" fill="none" stroke="white" strokeWidth="0.8" />
+                                <text x="60" y="32.5" fill="white" fontSize="5" textAnchor="start">
+                                    Intensity drop
+                                </text>
+                            </g>
                         </svg>
                         <div className="flex justify-center space-x-4 text-xs mt-2">
                             <span className="flex items-center"><div className="w-3 h-3 bg-green-400 rounded-full mr-1.5"></div>Dry</span>
