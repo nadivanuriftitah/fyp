@@ -14,26 +14,39 @@
         background-color: #0D1B2A;
         color: #E0E1DD;
       }
-      /* Scroll Reveal Animation */
-      .reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s cubic-bezier(0.6, 0.2, 0.1, 1), transform 0.8s cubic-bezier(0.6, 0.2, 0.1, 1);
+      /* Shimmer effect for buttons */
+      .btn-shimmer {
+        position: relative;
+        overflow: hidden;
+        transform: translate3d(0, 0, 0); /* Force hardware acceleration */
       }
-      .reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
+
+      .btn-shimmer::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        transform: translateX(-100%) skewX(-25deg);
+        width: 120%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      .btn-shimmer:hover::after {
+        transform: translateX(100%) skewX(-25deg);
       }
     </style>
-  <script type="importmap">
+<script type="importmap">
 {
   "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+    "react": "https://esm.sh/react@19.2.3",
+    "react/": "https://esm.sh/react@19.2.3/",
+    "react-dom/client": "https://esm.sh/react-dom@19.2.3/client",
+    "react-dom/": "https://esm.sh/react-dom@19.2.3/"
   }
 }
 </script>
+
 </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

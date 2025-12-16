@@ -71,7 +71,7 @@ const App: React.FC = () => {
           </div>
           <button
             onClick={() => scrollToSection('system')}
-            className="mt-10 bg-[#1EE3CF] text-[#0D1B2A] font-bold py-3 px-8 rounded-full text-lg transform hover:scale-105 transition-transform duration-300 shadow-lg shadow-[#1EE3CF]/20"
+            className="mt-10 bg-[#1EE3CF] text-[#0D1B2A] font-bold py-3 px-8 rounded-full text-lg transform hover:scale-105 transition-all duration-300 shadow-lg shadow-[#1EE3CF]/20 hover:shadow-xl hover:shadow-[#1EE3CF]/40 active:brightness-95"
           >
             Tap to Explore
           </button>
@@ -83,7 +83,8 @@ const App: React.FC = () => {
         </Section>
 
         {/* Dry vs Wet Animation Section */}
-        <Section title="Dry vs. Wet Simulation">
+        {/* FIX: Added missing 'id' prop to Section component. */}
+        <Section id="simulation" title="Dry vs. Wet Simulation">
             <div className="bg-[#1B263B] p-6 rounded-2xl shadow-xl flex flex-col items-center">
                 <div className="flex items-center space-x-4 mb-6">
                     <span className={`font-bold ${!isWet ? 'text-[#1EE3CF]' : 'text-gray-400'}`}>DRY</span>
@@ -142,7 +143,7 @@ const App: React.FC = () => {
               <button
                 key={scenario.id}
                 onClick={() => setSelectedScenario(scenario)}
-                className={`p-3 rounded-lg text-center transition-all duration-300 ${selectedScenario.id === scenario.id ? 'bg-[#1EE3CF] text-[#0D1B2A] font-bold' : 'bg-[#1B263B] hover:bg-[#415A77]'}`}
+                className={`p-3 rounded-lg text-center transition-all duration-300 btn-shimmer ${selectedScenario.id === scenario.id ? 'bg-[#1EE3CF] text-[#0D1B2A] font-bold' : 'bg-[#1B263B] hover:bg-[#415A77]'}`}
               >
                 {scenario.name}
               </button>
@@ -178,11 +179,12 @@ const App: React.FC = () => {
         </Section>
 
         {/* Liquid Comparison */}
-        <Section title="Liquid Comparison">
+        {/* FIX: Added missing 'id' prop to Section component. */}
+        <Section id="liquid-comparison" title="Liquid Comparison">
             <div className="bg-[#1B263B] p-6 rounded-2xl">
                  <div className="flex justify-center gap-2 mb-6">
                     {LIQUIDS_DATA.map(liquid => (
-                        <button key={liquid.id} onClick={() => setSelectedLiquid(liquid)} className={`px-4 py-2 text-sm rounded-full transition-colors ${selectedLiquid.id === liquid.id ? 'bg-[#1EE3CF] text-[#0D1B2A] font-semibold' : 'bg-[#415A77] text-white'}`}>
+                        <button key={liquid.id} onClick={() => setSelectedLiquid(liquid)} className={`px-4 py-2 text-sm rounded-full transition-colors btn-shimmer ${selectedLiquid.id === liquid.id ? 'bg-[#1EE3CF] text-[#0D1B2A] font-semibold' : 'bg-[#415A77] text-white hover:bg-[#5A7492]'}`}>
                             {liquid.name}
                         </button>
                     ))}
@@ -198,7 +200,8 @@ const App: React.FC = () => {
         </Section>
 
         {/* How to Read the Graph Section */}
-        <Section title="How to Read the Graph">
+        {/* FIX: Added missing 'id' prop to Section component. */}
+        <Section id="graph-guide" title="How to Read the Graph">
             <div className="bg-[#1B263B] p-4 rounded-2xl">
                 <div className="w-full h-64 bg-[#0D1B2A] rounded-lg flex items-center justify-center mb-4">
                      <span className="text-gray-500 text-sm"> {/* REPLACE-WITH-IMAGE: Annotated Sample Graph */} Placeholder Graph </span>
@@ -225,7 +228,7 @@ const App: React.FC = () => {
                 ))}
             </div>
             <div className="bg-[#1B263B] p-4 rounded-xl">
-                <button onClick={() => setFutureWorkCollapsed(!futureWorkCollapsed)} className="w-full flex justify-between items-center text-left">
+                <button onClick={() => setFutureWorkCollapsed(!futureWorkCollapsed)} className="w-full flex justify-between items-center text-left btn-shimmer">
                     <h3 className="text-lg font-bold text-white">Future Work</h3>
                     <Icon name={futureWorkCollapsed ? 'chevronDown' : 'chevronUp'} className="w-6 h-6 text-[#1EE3CF]" />
                 </button>

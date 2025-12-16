@@ -40,14 +40,14 @@ export const InfoModal: React.FC<InfoModalProps> = ({ step, onClose, onNav, isFi
             <button 
                 onClick={() => onNav('prev')} 
                 disabled={isFirst}
-                className="px-4 py-2 bg-[#415A77] rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-[#415A77] rounded-lg disabled:opacity-50 disabled:cursor-not-allowed btn-shimmer hover:brightness-110 active:brightness-95 transition-all"
             >
                 Back
             </button>
             <button 
                 onClick={() => onNav('next')} 
                 disabled={isLast}
-                className="px-4 py-2 bg-[#1EE3CF] text-[#0D1B2A] font-bold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-[#1EE3CF] text-[#0D1B2A] font-bold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed btn-shimmer hover:brightness-110 active:brightness-95 transition-all"
             >
                 Next
             </button>
