@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Section } from './components/Section';
 import { InfoModal } from './components/InfoModal';
@@ -15,6 +15,16 @@ const App: React.FC = () => {
   const [selectedScenario, setSelectedScenario] = useState<Scenario>(SCENARIOS_DATA[3]);
   const [selectedLiquid, setSelectedLiquid] = useState<Liquid>(LIQUIDS_DATA[0]);
   const [futureWorkCollapsed, setFutureWorkCollapsed] = useState(true);
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const handleChange = () => setReduceMotion(mediaQuery.matches);
+    handleChange(); // Set initial state
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
 
   const sectionRefs = {
     home: useRef<HTMLDivElement>(null),
@@ -58,7 +68,7 @@ const App: React.FC = () => {
           <h1 className="text-4xl md:text-6xl font-bold text-white tracking-tight">
             Light Intensity Modulated <br/>Water Leakage Detection
           </h1>
-          <p className="mt-4 text-lg md:text-xl text-[#A9B4C2]">
+          <p className="text-4xl md:text-xl text-[#A9B4C2]">
             Using Multi-Point Tapered Polymer Optical Fiber
           </p>
           <p className="mt-4 text-lg text-white">
@@ -88,81 +98,94 @@ const App: React.FC = () => {
         <Section id="simulation" ref={sectionRefs['home']} title="Dry vs. Wet Simulation">
             <div className="bg-[#1B263B] p-6 rounded-2xl shadow-xl flex flex-col items-center">
                 <div className="flex items-center space-x-4 mb-6">
-                    <span className={`font-bold ${!isWet ? 'text-[#1EE3CF]' : 'text-gray-400'}`}>DRY</span>
+                    <span className={`font-bold transition-colors ${!isWet ? 'text-[#1EE3CF]' : 'text-gray-400'}`}>DRY</span>
                     <label htmlFor="wet-toggle" className="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" id="wet-toggle" className="sr-only peer" checked={isWet} onChange={() => setIsWet(!isWet)} />
                         <div className="w-14 h-8 bg-gray-600 rounded-full peer peer-checked:bg-[#1EE3CF]"></div>
                         <div className="absolute top-1 left-1 bg-white border-gray-300 border rounded-full h-6 w-6 transition-all peer-checked:translate-x-full"></div>
                     </label>
-                    <span className={`font-bold ${isWet ? 'text-[#1EE3CF]' : 'text-gray-400'}`}>WET</span>
+                    <span className={`font-bold transition-colors ${isWet ? 'text-[#1EE3CF]' : 'text-gray-400'}`}>WET</span>
                 </div>
                 
-                <div className="relative w-full max-w-md h-32 flex flex-col justify-center items-center">
-                    {/* Fiber representation */}
-                    <div className="w-full h-2 bg-[#415A77] rounded-full relative overflow-hidden">
-                       {/* Light path */}
-                       <div className={`absolute top-0 left-0 h-full bg-gradient-to-r from-[#1EE3CF] to-yellow-300 transition-all duration-500 ease-in-out ${isWet ? 'w-1/2' : 'w-full'}`}></div>
-                    </div>
-                    <div className="absolute w-20 h-8 bg-[#1B263B] border-2 border-[#415A77] rounded-lg -mt-1 scale-y-50"></div>
-                    <p className="text-xs text-gray-400 mt-2">Taper Region</p>
+                <div className="w-full max-w-2xl my-4">
+                <svg viewBox="0 0 900 320" className="w-full h-auto" aria-labelledby="schematic-title">
+                        <title id="schematic-title">Schematic of a tapered optical fiber showing light leakage when wet.</title>
+                        <defs>
+                            <marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#FFD700" />
+                            </marker>
+                            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur" />
+                                    <feMergeNode in="SourceGraphic" />
+                                </feMerge>
+                            </filter>
+                        </defs>
 
-                    {/* Leaking light animation */}
-                    <div className={`absolute transition-opacity duration-500 ease-in-out ${isWet ? 'opacity-100' : 'opacity-0'}`}>
-                         <div className="absolute w-1 h-1 bg-blue-300 rounded-full animate-ping" style={{top: '3rem', animationDelay: '0s'}}></div>
-                         <div className="absolute w-1 h-1 bg-blue-300 rounded-full animate-ping" style={{top: '3.5rem', left: '-1rem', animationDelay: '0.2s'}}></div>
-                         <div className="absolute w-1 h-1 bg-blue-300 rounded-full animate-ping" style={{top: '3.5rem', left: '1rem', animationDelay: '0.4s'}}></div>
-                         <p className="absolute top-16 text-sm text-blue-300">Light Leakage</p>
-                    </div>
-                </div>
+                        {/* Fiber Body */}
+                        <path d="M 50 140 L 300 140 C 350 140, 380 155, 450 155 C 520 155, 550 140, 600 140 L 850 140 L 850 180 L 600 180 C 550 180, 520 165, 450 165 C 380 165, 350 180, 300 180 L 50 180 Z" fill="#778DA9" />
+                        <path d="M 50 142 C 150 142, 250 142, 300 142 C 350 142, 380 157, 450 157 C 520 157, 550 142, 600 142 L 850 142" stroke="white" strokeWidth="1" fill="none" opacity="0.1" />
+                        <path d="M 50 178 C 150 178, 250 178, 300 178 C 350 178, 380 163, 450 163 C 520 163, 550 178, 600 178 L 850 178" stroke="black" strokeWidth="1.5" fill="none" opacity="0.1" />
+                        
+                        {/* Internal Light Path */}
+                        <line x1="50" y1="160" x2="850" y2="160" stroke="#FFD700" strokeWidth="4" filter={reduceMotion ? 'none' : 'url(#glow)'}>
+                            {!reduceMotion && <animate attributeName="stroke-opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite" />}
+                        </line>
 
-                {/* Mini Graph */}
-                <div className="w-full max-w-md mt-6">
-                    <p className="text-center font-semibold mb-2">Received Intensity</p>
-                    <div className="bg-[#0D1B2A] p-4 rounded-lg">
-                        <svg viewBox="0 0 100 60" className="w-full h-auto" aria-labelledby="graphTitle" role="img">
-                            <title id="graphTitle">Animated graph showing light intensity drop when the sensor is wet.</title>
-                            {/* Axes */}
-                            <line x1="5" y1="55" x2="95" y2="55" stroke="#415A77" strokeWidth="1" />
-                            <line x1="5" y1="5" x2="5" y2="55" stroke="#415A77" strokeWidth="1" />
-                            <text x="50" y="10" textAnchor="middle" fill="#A9B4C2" fontSize="5">Intensity</text>
+                        {/* Water Puddle (Wet only) */}
+                        <path 
+                            d="M 320 180 C 350 170, 550 170, 580 180 C 600 190, 550 210, 450 210 C 350 210, 300 190, 320 180 Z"
+                            fill="#3b82f6" 
+                            className={`transition-opacity duration-500 ${isWet ? 'opacity-30' : 'opacity-0'}`}
+                        />
+                        
+                        {/* Leakage Rays */}
+                        <g stroke="#1EE3CF" strokeWidth="2" strokeLinecap="round" className={`transition-opacity duration-500 ${isWet ? 'opacity-100' : 'opacity-20'}`}>
+                            <line x1="450" y1="155" x2="450" y2="120" />
+                            <line x1="420" y1="155" x2="390" y2="130" />
+                            <line x1="480" y1="155" x2="510" y2="130" />
+                        </g>
+                        
+                        {/* Labels */}
+                        <g fill="#A9B4C2" fontSize="18" textAnchor="middle">
+                            <line x1="450" y1="155" x2="450" y2="80" stroke="#A9B4C2" strokeWidth="1" strokeDasharray="3,3" />
+                            <circle cx="450" cy="155" r="3" fill="#A9B4C2" />
+                            <text x="450" y="70">Taper waist</text>
 
-                            {/* Dry reference line (visible only when wet) */}
-                            <path
-                                d="M 10 20 C 30 20, 70 25, 90 22"
-                                stroke="#4ade80"
-                                fill="none"
-                                strokeWidth="1.5"
-                                strokeDasharray="3 2"
-                                className={`transition-opacity duration-300 ${isWet ? 'opacity-50' : 'opacity-0'}`}
-                            />
+                            <line x1="100" y1="190" x2="150" y2="220" stroke="#A9B4C2" strokeWidth="1" />
+                            <circle cx="100" cy="190" r="3" fill="#A9B4C2" />
+                            <text x="160" y="235">Light</text>
 
-                            {/* Main signal line (animates) */}
-                            <path
-                                d="M 10 20 C 30 20, 70 25, 90 22"
-                                stroke={isWet ? "#f87171" : "#4ade80"}
-                                fill="none"
-                                strokeWidth="2"
+                             <line x1="390" y1="130" x2="340" y2="100" stroke="#A9B4C2" strokeWidth="1" />
+                            <circle cx="390" cy="130" r="3" fill="#A9B4C2" />
+                            <text x="330" y="90">Leakage</text>
+                        </g>
+                        
+                        {/* Light Propagation Arrow */}
+                        <line x1="80" y1="190" x2="180" y2="190" stroke="#FFD700" strokeWidth="3" strokeLinecap="round" markerEnd="url(#arrowhead)" />
+                        
+                        {/* Received Intensity Meter */}
+                        <g transform="translate(700, 230)">
+                           <rect x="0" y="0" width="30" height="80" fill="#1B263B" stroke="#415A77" strokeWidth="2" />
+                            <rect
+                                x="4"
+                                width="22"
+                                height={isWet ? "32" : "72"}
+                                y={isWet ? "44" : "4"}
+                                fill={isWet ? "#F97316" : "#4ade80"}
                                 className="transition-all duration-500 ease-in-out"
-                                style={{ transform: isWet ? 'translateY(20px)' : 'translateY(0px)' }}
                             />
-
-                            {/* Intensity Drop Arrow and Label (visible only when wet) */}
-                            <g className={`transition-opacity duration-300 delay-200 ${isWet ? 'opacity-100' : 'opacity-0'}`} aria-hidden={!isWet}>
-                                {/* Arrow line */}
-                                <line x1="55" y1="23" x2="55" y2="40" stroke="white" strokeWidth="0.8" />
-                                {/* Arrow heads */}
-                                <polyline points="53,25 55,23 57,25" fill="none" stroke="white" strokeWidth="0.8" />
-                                <polyline points="53,38 55,40 57,38" fill="none" stroke="white" strokeWidth="0.8" />
-                                <text x="60" y="32.5" fill="white" fontSize="5" textAnchor="start">
-                                    Intensity drop
-                                </text>
-                            </g>
-                        </svg>
-                        <div className="flex justify-center space-x-4 text-xs mt-2">
-                            <span className="flex items-center"><div className="w-3 h-3 bg-green-400 rounded-full mr-1.5"></div>Dry</span>
-                            <span className="flex items-center"><div className="w-3 h-3 bg-red-400 rounded-full mr-1.5"></div>Wet</span>
-                        </div>
-                    </div>
+                            <text x="80" y="20" fill={isWet ? "#F97316" : "#4ade80"} fontSize="20" className="transition-all duration-500 ease-in-out font-bold" textAnchor="start">
+                                {isWet ? 'Low' : 'High'}
+                            </text>
+                             <text x="80" y="50" fill="#A9B4C2" fontSize="18" textAnchor="start">Received</text>
+                             <text x="80" y="75" fill="#A9B4C2" fontSize="18" textAnchor="start">Intensity</text>
+                        </g>
+                    </svg>
+                    <p className="text-center text-sm text-[#A9B4C2] mt-4">
+                        Wet condition increases leakage at taper → lower received intensity.
+                    </p>
                 </div>
             </div>
         </Section>
