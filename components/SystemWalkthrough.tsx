@@ -12,7 +12,7 @@ const StepButton: React.FC<{ step: WalkthroughStep, onClick: () => void, isActiv
     <div className="flex flex-col items-center flex-shrink-0 w-24">
         <button
             onClick={onClick}
-            className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 transform hover:-translate-y-1 ${isActive ? 'bg-[#1EE3CF] border-[#1EE3CF] shadow-lg shadow-[#1EE3CF]/30' : 'bg-[#1B263B] border-[#415A77] hover:border-[#1EE3CF] hover:shadow-md hover:shadow-cyan-500/20'}`}
+            className={`w-16 h-16 rounded-full flex items-center justify-center border-2 transition-all duration-300 ${isActive ? 'bg-[#1EE3CF] border-[#1EE3CF] shadow-lg shadow-[#1EE3CF]/30' : 'bg-[#1B263B] border-[#415A77] hover:border-[#1EE3CF]'}`}
         >
             <Icon name={step.icon} className={`w-8 h-8 ${isActive ? 'text-[#0D1B2A]' : 'text-[#A9B4C2]'}`} />
         </button>

@@ -1,5 +1,5 @@
 {
-  "name": "fyp-presentation-web-page",
+  "name": "optical-fiber-leak-detector-explainer",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,9 +10,6 @@
   },
   "dependencies": {
     "react": "^19.2.3",
-    "three": "0.166.1",
-    "@react-three/fiber": "8.16.8",
-    "@react-three/drei": "9.108.3",
     "react-dom": "^19.2.3"
   },
   "devDependencies": {

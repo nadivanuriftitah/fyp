@@ -5,7 +5,6 @@ import { Section } from './components/Section';
 import { InfoModal } from './components/InfoModal';
 import { SystemWalkthrough } from './components/SystemWalkthrough';
 import { Icon } from './components/Icon';
-import { FiberViewer } from './components/FiberViewer';
 import { SECTIONS, WALKTHROUGH_STEPS, SCENARIOS_DATA, RESULTS_DATA, LIQUIDS_DATA, BENEFITS_DATA, FUTURE_WORK_DATA } from './constants';
 import type { WalkthroughStep, Scenario, Liquid } from './types';
 
@@ -19,7 +18,6 @@ const App: React.FC = () => {
   const sectionRefs = {
     home: useRef<HTMLDivElement>(null),
     system: useRef<HTMLDivElement>(null),
-    fiber: useRef<HTMLDivElement>(null),
     scenarios: useRef<HTMLDivElement>(null),
     results: useRef<HTMLDivElement>(null),
     about: useRef<HTMLDivElement>(null),
@@ -61,8 +59,11 @@ const App: React.FC = () => {
           <p className="mt-4 text-lg md:text-xl text-[#A9B4C2]">
             Using Multi-Point Tapered Polymer Optical Fiber
           </p>
-          <p className="mt-2 text-sm text-[#A9B4C2]">
-            Nadiva Nuriftitah (20086690)
+          <p className="mt-4 text-lg text-white">
+            Nadiva Nuriftitah
+          </p>
+          <p className="mt-1 text-sm text-[#A9B4C2]">
+            Supervisor: Professor Angela Amphawan
           </p>
           <div className="flex space-x-4 mt-6">
             <span className="bg-[#1B263B]/80 text-[#93a1b8] text-sm font-medium px-3 py-1.5 rounded-full">Sensor: Tapered POF</span>
@@ -70,7 +71,7 @@ const App: React.FC = () => {
           </div>
           <button
             onClick={() => scrollToSection('system')}
-            className="shimmer-btn mt-10 bg-[#1EE3CF] text-[#0D1B2A] font-bold py-3 px-8 rounded-full text-lg relative overflow-hidden transform hover:scale-105 transition-transform duration-300 shadow-lg shadow-[#1EE3CF]/20"
+            className="mt-10 bg-[#1EE3CF] text-[#0D1B2A] font-bold py-3 px-8 rounded-full text-lg transform hover:scale-105 transition-transform duration-300 shadow-lg shadow-[#1EE3CF]/20"
           >
             Tap to Explore
           </button>
@@ -80,24 +81,18 @@ const App: React.FC = () => {
         <Section id="system" ref={sectionRefs.system} title="Interactive System Walkthrough">
           <SystemWalkthrough onStepClick={handleWalkthroughStepClick} />
         </Section>
-        
-        {/* 3D Fiber Viewer Section */}
-        <Section id="fiber" ref={sectionRefs.fiber} title="3D Tapered Fiber">
-          <p className="text-center text-sm text-gray-400 mb-6">Drag to rotate, scroll to zoom.</p>
-          <FiberViewer />
-        </Section>
 
         {/* Dry vs Wet Animation Section */}
         <Section title="Dry vs. Wet Simulation">
-            <div className="bg-[#1B263B] p-6 rounded-2xl shadow-xl flex flex-col items-center transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#1EE3CF]/10">
+            <div className="bg-[#1B263B] p-6 rounded-2xl shadow-xl flex flex-col items-center">
                 <div className="flex items-center space-x-4 mb-6">
-                    <span className={`font-bold transition-colors ${!isWet ? 'text-[#1EE3CF]' : 'text-gray-400'}`}>DRY</span>
+                    <span className={`font-bold ${!isWet ? 'text-[#1EE3CF]' : 'text-gray-400'}`}>DRY</span>
                     <label htmlFor="wet-toggle" className="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" id="wet-toggle" className="sr-only peer" checked={isWet} onChange={() => setIsWet(!isWet)} />
                         <div className="w-14 h-8 bg-gray-600 rounded-full peer peer-checked:bg-[#1EE3CF]"></div>
                         <div className="absolute top-1 left-1 bg-white border-gray-300 border rounded-full h-6 w-6 transition-all peer-checked:translate-x-full"></div>
                     </label>
-                    <span className={`font-bold transition-colors ${isWet ? 'text-[#1EE3CF]' : 'text-gray-400'}`}>WET</span>
+                    <span className={`font-bold ${isWet ? 'text-[#1EE3CF]' : 'text-gray-400'}`}>WET</span>
                 </div>
                 
                 <div className="relative w-full max-w-md h-32 flex flex-col justify-center items-center">
@@ -147,13 +142,13 @@ const App: React.FC = () => {
               <button
                 key={scenario.id}
                 onClick={() => setSelectedScenario(scenario)}
-                className={`p-3 rounded-lg text-center transition-all duration-300 transform hover:-translate-y-1 ${selectedScenario.id === scenario.id ? 'bg-[#1EE3CF] text-[#0D1B2A] font-bold shadow-lg shadow-[#1EE3CF]/30' : 'bg-[#1B263B] hover:bg-[#415A77]'}`}
+                className={`p-3 rounded-lg text-center transition-all duration-300 ${selectedScenario.id === scenario.id ? 'bg-[#1EE3CF] text-[#0D1B2A] font-bold' : 'bg-[#1B263B] hover:bg-[#415A77]'}`}
               >
                 {scenario.name}
               </button>
             ))}
           </div>
-          <div className="mt-6 bg-[#1B263B] p-4 rounded-2xl flex flex-col md:flex-row items-center gap-4 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#1EE3CF]/10">
+          <div className="mt-6 bg-[#1B263B] p-4 rounded-2xl flex flex-col md:flex-row items-center gap-4">
             <div className="w-full md:w-1/3 h-48 bg-[#0D1B2A] rounded-lg flex items-center justify-center">
               <span className="text-gray-500 text-sm"> {/* REPLACE-WITH-IMAGE: ${selectedScenario.name} */} Placeholder Image </span>
             </div>
@@ -173,7 +168,7 @@ const App: React.FC = () => {
         <Section id="results" ref={sectionRefs.results} title="Results Summary">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {RESULTS_DATA.map(result => (
-                    <div key={result.title} className="bg-[#1B263B] p-5 rounded-xl text-center transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:shadow-[#1EE3CF]/10">
+                    <div key={result.title} className="bg-[#1B263B] p-5 rounded-xl text-center">
                         <p className="text-sm text-gray-400">{result.title}</p>
                         <p className="text-3xl font-bold text-[#1EE3CF] my-2">{result.value}</p>
                         <p className="text-xs text-[#A9B4C2]">{result.desc}</p>
@@ -184,7 +179,7 @@ const App: React.FC = () => {
 
         {/* Liquid Comparison */}
         <Section title="Liquid Comparison">
-            <div className="bg-[#1B263B] p-6 rounded-2xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#1EE3CF]/10">
+            <div className="bg-[#1B263B] p-6 rounded-2xl">
                  <div className="flex justify-center gap-2 mb-6">
                     {LIQUIDS_DATA.map(liquid => (
                         <button key={liquid.id} onClick={() => setSelectedLiquid(liquid)} className={`px-4 py-2 text-sm rounded-full transition-colors ${selectedLiquid.id === liquid.id ? 'bg-[#1EE3CF] text-[#0D1B2A] font-semibold' : 'bg-[#415A77] text-white'}`}>
@@ -204,7 +199,7 @@ const App: React.FC = () => {
 
         {/* How to Read the Graph Section */}
         <Section title="How to Read the Graph">
-            <div className="bg-[#1B263B] p-4 rounded-2xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-[#1EE3CF]/10">
+            <div className="bg-[#1B263B] p-4 rounded-2xl">
                 <div className="w-full h-64 bg-[#0D1B2A] rounded-lg flex items-center justify-center mb-4">
                      <span className="text-gray-500 text-sm"> {/* REPLACE-WITH-IMAGE: Annotated Sample Graph */} Placeholder Graph </span>
                 </div>
@@ -220,7 +215,7 @@ const App: React.FC = () => {
         <Section id="about" ref={sectionRefs.about} title="Why It Matters & Future Work">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 {BENEFITS_DATA.map(benefit => (
-                    <div key={benefit.title} className="bg-[#1B263B] p-5 rounded-xl text-center transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:shadow-[#1EE3CF]/10">
+                    <div key={benefit.title} className="bg-[#1B263B] p-5 rounded-xl text-center">
                         <div className="flex justify-center mb-3">
                             <Icon name={benefit.icon as any} className="w-8 h-8 text-[#1EE3CF]" />
                         </div>
@@ -254,13 +249,10 @@ const App: React.FC = () => {
             </p>
             <p className="mt-2">
                 <a href="mailto:your.email@example.com" className="text-[#1EE3CF] hover:underline">
+                    {/* REPLACE-WITH-DATA: Your contact email */}
                     Contact for more info
                 </a>
             </p>
-            <div className="flex justify-center items-center gap-8 mt-6">
-                <img src="/assets/sunway_logo.png" alt="Sunway University Logo" className="h-10 opacity-70" />
-                <img src="/assets/mimos_logo.png" alt="MIMOS Logo" className="h-8 opacity-70" />
-            </div>
         </footer>
       </main>
 

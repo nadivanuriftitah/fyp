@@ -13,67 +13,18 @@
       body {
         background-color: #0D1B2A;
         color: #E0E1DD;
-        overflow-x: hidden;
-      }
-      /* Animated Background */
-      body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: 
-          radial-gradient(circle at 15% 25%, rgba(30, 227, 207, 0.08), transparent 40%),
-          radial-gradient(circle at 85% 75%, rgba(65, 90, 119, 0.12), transparent 40%);
-        animation: move-blobs 25s ease-in-out infinite alternate;
-        z-index: -1;
-      }
-      @keyframes move-blobs {
-        0% { transform: translate(0, 0) scale(1); }
-        100% { transform: translate(5vw, -5vh) scale(1.1); }
-      }
-      /* Scroll Reveal Animation */
-      .reveal {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s cubic-bezier(0.6, 0.2, 0.1, 1), transform 0.8s cubic-bezier(0.6, 0.2, 0.1, 1);
-      }
-      .reveal.visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      /* Shimmer button effect */
-      .shimmer-btn:hover::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 50%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        animation: shimmer 1s forwards;
-      }
-      @keyframes shimmer {
-          100% {
-              left: 150%;
-          }
       }
     </style>
-    <script type="importmap">
+  <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@18.2.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "three": "https://esm.sh/three@0.166.1",
-    "@react-three/fiber": "https://esm.sh/@react-three/fiber@8.16.8",
-    "@react-three/drei": "https://esm.sh/@react-three/drei@9.108.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
   }
 }
 </script>
-  </head>
+</head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
