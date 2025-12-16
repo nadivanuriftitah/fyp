@@ -5,6 +5,7 @@ import { Section } from './components/Section';
 import { InfoModal } from './components/InfoModal';
 import { SystemWalkthrough } from './components/SystemWalkthrough';
 import { Icon } from './components/Icon';
+import { FiberViewer } from './components/FiberViewer';
 import { SECTIONS, WALKTHROUGH_STEPS, SCENARIOS_DATA, RESULTS_DATA, LIQUIDS_DATA, BENEFITS_DATA, FUTURE_WORK_DATA } from './constants';
 import type { WalkthroughStep, Scenario, Liquid } from './types';
 
@@ -18,6 +19,7 @@ const App: React.FC = () => {
   const sectionRefs = {
     home: useRef<HTMLDivElement>(null),
     system: useRef<HTMLDivElement>(null),
+    'fiber-viewer': useRef<HTMLDivElement>(null),
     scenarios: useRef<HTMLDivElement>(null),
     results: useRef<HTMLDivElement>(null),
     about: useRef<HTMLDivElement>(null),
@@ -83,8 +85,7 @@ const App: React.FC = () => {
         </Section>
 
         {/* Dry vs Wet Animation Section */}
-        {/* FIX: Added missing 'id' prop to Section component. */}
-        <Section id="simulation" title="Dry vs. Wet Simulation">
+        <Section id="simulation" ref={sectionRefs['home']} title="Dry vs. Wet Simulation">
             <div className="bg-[#1B263B] p-6 rounded-2xl shadow-xl flex flex-col items-center">
                 <div className="flex items-center space-x-4 mb-6">
                     <span className={`font-bold ${!isWet ? 'text-[#1EE3CF]' : 'text-gray-400'}`}>DRY</span>
@@ -135,6 +136,12 @@ const App: React.FC = () => {
             </div>
         </Section>
 
+        {/* 3D Fiber Viewer Section */}
+        <Section id="fiber-viewer" ref={sectionRefs['fiber-viewer']} title="3D Tapered Fiber Viewer">
+          <div className="bg-[#1B263B] p-4 rounded-2xl shadow-xl">
+            <FiberViewer />
+          </div>
+        </Section>
 
         {/* Choose a Scenario Section */}
         <Section id="scenarios" ref={sectionRefs.scenarios} title="Choose a Scenario">
@@ -179,8 +186,7 @@ const App: React.FC = () => {
         </Section>
 
         {/* Liquid Comparison */}
-        {/* FIX: Added missing 'id' prop to Section component. */}
-        <Section id="liquid-comparison" title="Liquid Comparison">
+        <Section id="liquid-comparison" ref={sectionRefs['home']} title="Liquid Comparison">
             <div className="bg-[#1B263B] p-6 rounded-2xl">
                  <div className="flex justify-center gap-2 mb-6">
                     {LIQUIDS_DATA.map(liquid => (
@@ -200,8 +206,7 @@ const App: React.FC = () => {
         </Section>
 
         {/* How to Read the Graph Section */}
-        {/* FIX: Added missing 'id' prop to Section component. */}
-        <Section id="graph-guide" title="How to Read the Graph">
+        <Section id="graph-guide" ref={sectionRefs['home']} title="How to Read the Graph">
             <div className="bg-[#1B263B] p-4 rounded-2xl">
                 <div className="w-full h-64 bg-[#0D1B2A] rounded-lg flex items-center justify-center mb-4">
                      <span className="text-gray-500 text-sm"> {/* REPLACE-WITH-IMAGE: Annotated Sample Graph */} Placeholder Graph </span>

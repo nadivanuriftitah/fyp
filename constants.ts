@@ -4,6 +4,7 @@ import type { WalkthroughStep, Scenario, SectionInfo, Result, Liquid, Benefit } 
 export const SECTIONS: SectionInfo[] = [
   { id: 'home', label: 'Home', icon: 'home' },
   { id: 'system', label: 'System', icon: 'system' },
+  { id: 'fiber-viewer', label: '3D Fiber', icon: '3d' },
   { id: 'scenarios', label: 'Scenarios', icon: 'scenarios' },
   { id: 'results', label: 'Results', icon: 'results' },
   { id: 'about', label: 'About', icon: 'about' },
