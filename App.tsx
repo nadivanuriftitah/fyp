@@ -248,19 +248,35 @@ const App: React.FC = () => {
         </Section>
 
         {/* Footer */}
-        <footer className="text-center p-8 border-t border-[#1B263B] text-xs text-[#A9B4C2]">
-            <p>
-                Nadiva Nuriftitah (ID: 20086690)
-            </p>
-            <p className="mt-1">
-                Supervisor: Professor Angela Amphawan
-            </p>
-            <p className="mt-2">
-                <a href="mailto:your.email@example.com" className="text-[#1EE3CF] hover:underline">
-                    {/* REPLACE-WITH-DATA: Your contact email */}
-                    Contact for more info
+        <footer className="p-8 border-t border-[#1B263B] text-xs text-[#A9B4C2]">
+          <div className="max-w-3xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            {/* Logos Section */}
+            <div className="flex flex-col sm:flex-row items-center gap-6">
+              <div className="text-center">
+                <div className="w-28 h-12 bg-[#415A77] rounded flex items-center justify-center text-gray-400 text-[10px] p-2">
+                  Sunway University Logo
+                </div>
+                <p className="mt-2 text-xs">Sunway University</p>
+              </div>
+              <div className="text-center">
+                <div className="w-28 h-12 bg-[#415A77] rounded flex items-center justify-center text-gray-400 text-[10px] p-2">
+                  MIMOS Logo
+                </div>
+                <p className="mt-2 text-xs">MIMOS Berhad</p>
+              </div>
+            </div>
+            
+            {/* Contact Info Section */}
+            <div className="text-center md:text-right">
+              <p className="font-bold text-white">Nadiva Nuriftitah (20086690)</p>
+              <p className="mt-1">Supervisor: Prof. Angela Amphawan</p>
+              <p className="mt-2">
+                <a href="mailto:20086690@sunway.edu.my" className="text-[#1EE3CF] hover:underline">
+                  20086690@sunway.edu.my
                 </a>
-            </p>
+              </p>
+            </div>
+          </div>
         </footer>
       </main>
 
